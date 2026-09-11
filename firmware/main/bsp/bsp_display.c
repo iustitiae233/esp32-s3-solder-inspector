@@ -153,11 +153,12 @@ static void flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *src)
         spi_transaction_t t = { .length = (size_t)w * h * 16, .tx_buffer = src };
         spi_device_polling_transmit(s_lcd_spi, &t);
     } else {
-        /* 窄区:逐行发(RAMWR 后像素流按窗口自动换行) */
+        /* 窄区:逐行发(RAMWR 后像素流按窗口自动换行)。
+         * partial 模式渲染缓冲行跨度恒为全宽(LVGL 刷新为整宽横条) */
         for (int y = 0; y < h; y++) {
             spi_transaction_t t = {
                 .length = (size_t)w * 16,
-                .tx_buffer = src + (size_t)y * w * 2,
+                .tx_buffer = src + (size_t)y * LCD_HRES * 2,
             };
             spi_device_polling_transmit(s_lcd_spi, &t);
         }

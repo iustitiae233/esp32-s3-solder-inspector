@@ -110,8 +110,9 @@ int edge_ai_load(void)
         return -1;
     }
 
-    /* MobileNetV2 int8 需要的算子集 */
-    static tflite::MicroMutableOpResolver<12> resolver;
+    /* MobileNetV2 int8 需要的算子集(以实际导出模型的 builtin ops 对账:
+     * CONV_2D/DEPTHWISE_CONV_2D/FULLY_CONNECTED/ADD/MEAN/PAD,其余为兼容备用) */
+    static tflite::MicroMutableOpResolver<15> resolver;
     resolver.AddConv2D();
     resolver.AddDepthwiseConv2D();
     resolver.AddFullyConnected();
@@ -124,6 +125,9 @@ int edge_ai_load(void)
     resolver.AddQuantize();
     resolver.AddDequantize();
     resolver.AddConcatenation();
+    resolver.AddAdd();       /* MobileNetV2 残差连接 */
+    resolver.AddMean();      /* GlobalAveragePooling2D → MEAN */
+    resolver.AddPad();       /* stride=2 的 same padding */
 
     s_arena = (uint8_t *)heap_caps_malloc(EDGE_ARENA_SIZE, MALLOC_CAP_SPIRAM);
     if (s_arena == NULL) {

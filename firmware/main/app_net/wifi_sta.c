@@ -42,6 +42,7 @@ static void event_handler(void *arg, esp_event_base_t base, int32_t id, void *da
 int wifi_sta_start(const char *ssid, const char *pass)
 {
     static bool s_inited = false;
+    static bool s_started = false;
     if (!s_inited) {
         s_events = xEventGroupCreate();
         esp_netif_create_default_wifi_sta();
@@ -63,7 +64,11 @@ int wifi_sta_start(const char *ssid, const char *pass)
     wc.sta.pmf_cfg.capable = true;
     wc.sta.pmf_cfg.required = false;
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wc));
-    ESP_ERROR_CHECK(esp_wifi_start());
+    /* 重复调用(连接超时后 net_task 重试):已启动则不再 start,仅刷新凭据 */
+    if (!s_started) {
+        ESP_ERROR_CHECK(esp_wifi_start());
+        s_started = true;
+    }
 
     ESP_LOGI(TAG, "连接 \"%s\" ...", ssid);
     EventBits_t bits = xEventGroupWaitBits(s_events, WIFI_CONNECTED_BIT,
