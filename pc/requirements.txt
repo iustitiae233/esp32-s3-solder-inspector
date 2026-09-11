@@ -1,4 +1,6 @@
 pyside6>=6.6
 numpy>=1.24
-ultralytics>=8.2
 opencv-python>=4.8
+ultralytics>=8.2
+tensorflow>=2.13      # train_edge.py 训练+int8 量化
+esptool>=4.7          # tools/flash_model.py 烧录

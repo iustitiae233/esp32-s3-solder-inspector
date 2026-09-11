@@ -25,3 +25,5 @@ pc/datasets/
 .claude/settings.local.json
 .vscode/
 .idea/
+# 训练导出产物
+pc/export/
