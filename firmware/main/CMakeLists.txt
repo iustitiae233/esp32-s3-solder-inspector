@@ -1,0 +1,25 @@
+# main 组件:全部应用源码
+idf_component_register(
+    SRCS "main.c"
+         "bsp/bsp_display.c"
+         "bsp/bsp_touch.c"
+         "bsp/bsp_camera.c"
+         "bsp/bsp_key.c"
+         "bsp/bsp_backlight.c"
+         "app_camera/frame_hub.c"
+         "app_edge_ai/edge_ai.c"
+         "app_net/wifi_sta.c"
+         "app_net/pc_link.c"
+         "app_store/app_nvs.c"
+         "ui/ui.c"
+         "ui/ui_theme.c"
+         "ui/ui_page_home.c"
+         "ui/ui_page_detect.c"
+         "ui/ui_page_capture.c"
+         "ui/ui_page_stats.c"
+         "ui/ui_page_settings.c"
+         "ui/ui_calib.c"
+    INCLUDE_DIRS "." "bsp" "app_camera" "app_edge_ai" "app_net" "app_store" "ui"
+    EMBED_TXTFILES "labels_default.txt"
+    REQUIRES esp_timer driver nvs_flash esp_wifi esp_netif esp_event fatfs
+    PRIV_REQUIRES spi_flash)
