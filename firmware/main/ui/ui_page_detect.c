@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "app_nvs.h"
+#include "proto.h"
 #include "ui.h"
 #include "ui_theme.h"
 
@@ -152,7 +153,8 @@ void ui_page_detect_show_boxes(const uint8_t *payload, int len)
     memcpy(&n, payload + 4, 2);
     int shown = 0, ng = 0;
     int off = 6;
-    for (uint16_t i = 0; i < n && off + 20 <= len && shown < BOX_POOL_N; i++, off += 20) {
+    for (uint16_t i = 0; i < n && off + PROTO_DETECT_BOX_LEN <= len && shown < BOX_POOL_N;
+         i++, off += PROTO_DETECT_BOX_LEN) {
         float x, y, w, h, conf;
         memcpy(&x, payload + off + 0, 4);
         memcpy(&y, payload + off + 4, 4);

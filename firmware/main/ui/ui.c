@@ -7,6 +7,7 @@
 #include "esp_heap_caps.h"
 #include "esp_log.h"
 #include "lvgl.h"
+#include "proto.h"
 
 #include "ui_theme.h"
 
@@ -226,7 +227,7 @@ void ui_show_pc_boxes(const uint8_t *payload, int len)
         int stat_cls = 0;
         float best = 0;
         int off = 6;
-        for (uint16_t i = 0; i < n && off + 20 <= len; i++, off += 20) {
+        for (uint16_t i = 0; i < n && off + PROTO_DETECT_BOX_LEN <= len; i++, off += PROTO_DETECT_BOX_LEN) {
             uint8_t cls = payload[off + 16];
             float conf;
             memcpy(&conf, payload + off + 18, 4);

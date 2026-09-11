@@ -25,8 +25,8 @@
 #define PROTO_IMG_HEAD_LEN    10
 
 /* DETECT payload: u32 frame_id, u16 n, ×n{ f32 x, f32 y, f32 w, f32 h, u8 cls, u8 rsv, f32 conf }
- * 坐标为 240x240 原图像素坐标。 */
-#define PROTO_DETECT_BOX_LEN  20
+ * 坐标为 240x240 原图像素坐标。每框 4*4+1+1+4=22 字节。 */
+#define PROTO_DETECT_BOX_LEN  22
 
 /* COMMAND payload: u8 cmd, u8 arg */
 #define PROTO_CMD_STREAM_START 0x01
