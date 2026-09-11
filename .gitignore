@@ -1,0 +1,27 @@
+# ESP-IDF 构建产物
+firmware/build/
+firmware/managed_components/
+firmware/dependencies.lock
+firmware/sdkconfig
+firmware/sdkconfig.old
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# 训练/数据产物(体积大,不入库)
+pc/dataset/
+pc/dataset_yolo/
+pc/runs/
+pc/datasets/
+*.tflite
+*.pt
+
+# IDE / 本地配置
+.claude/settings.local.json
+.vscode/
+.idea/
