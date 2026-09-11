@@ -34,4 +34,7 @@ uint32_t frame_hub_get_mask(void);
 /** 相机任务调用:按掩码同步顺序回调各订阅者(运行在相机任务上下文,禁止阻塞)。 */
 void frame_hub_dispatch(const frame_t *f);
 
+/** 同上,但显式指定掩码(用于单次检测:当前模式掩码 | 单次订阅位)。 */
+void frame_hub_dispatch_masked(uint32_t mask, const frame_t *f);
+
 #endif /* FRAME_HUB_H */

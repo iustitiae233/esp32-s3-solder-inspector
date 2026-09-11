@@ -32,10 +32,14 @@ uint32_t frame_hub_get_mask(void)
     return s_mask;
 }
 
-void frame_hub_dispatch(const frame_t *f)
+void frame_hub_dispatch_masked(uint32_t mask, const frame_t *f)
 {
-    uint32_t mask = s_mask;
     if ((mask & FH_SUB_DISPLAY) && s_cbs[0]) s_cbs[0](f);
     if ((mask & FH_SUB_EDGE_AI) && s_cbs[1]) s_cbs[1](f);
     if ((mask & FH_SUB_NET) && s_cbs[2])     s_cbs[2](f);
+}
+
+void frame_hub_dispatch(const frame_t *f)
+{
+    frame_hub_dispatch_masked(s_mask, f);
 }
